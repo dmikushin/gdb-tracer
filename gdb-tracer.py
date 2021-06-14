@@ -8,10 +8,11 @@ try:
 
     def stopHandler(stopEvent):
         for b in stopEvent.breakpoints:
-            gdb.write('breakpoint\n')
+            gdb.write("{}\n".format(gdb.newest_frame().function().name))
+            gdb.execute('step')
             gdb.execute('continue')
 
-    gdb.events.stop.connect (stopHandler)
+    gdb.events.stop.connect(stopHandler)
     gdb.rbreak('foo')
     gdb.execute('run')
     gdb.execute('quit')
@@ -27,7 +28,5 @@ if (__name__ == '__main__') and not ingdb:
         print("Usage: {} <target_executable>".format(thisScript))
         exit(-1)
     targetExecutable = sys.argv[1]
-    print(thisScript)
-    print(targetExecutable)
-    subprocess.call(['gdb', '--command', thisScript, targetExecutable])
+    subprocess.call(['gdb', '-q', '--command', thisScript, targetExecutable])
 
