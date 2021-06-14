@@ -1,10 +1,7 @@
-int foo(int a, char b, float c, char* str)
-{
-	return a * (int)c;
-}
+#include "lib.h"
 
 int main(int argc, char* argv[])
 {
-	return foo(1, 'a', 4.5f, "hello");
+	return foo1(1, 'a', 4.5f, "hello") + foo2("world");
 }
 
